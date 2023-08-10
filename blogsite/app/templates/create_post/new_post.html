@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{%block title %}Feed{%endblock%}
+{%block css%}<link rel="stylesheet" type="text/css" href="../../static/css/create_post/new_post.css" />{%endblock%}
+{%block navbar%}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light navbar-inverse fixed-top", style="background-color: #a2cdf7">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+        <!-- Navbar brand -->
+        <a class="navbar-brand text-white" href="#">Brand</a>
+        <!-- Icons -->
+        <ul class="navbar-nav d-flex flex-row me-1">
+            <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link text-white" href="/home/{{user.uid}}"><i class="fas fa-envelope mx-1"></i> Home</a>
+            </li>
+            <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link text-white" href="/explore/{{user.uid}}"><i class="fas fa-cog mx-1"></i> Explore</a>
+            </li>
+            <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link text-white" href="/profile/{{user.uid}}"><i class="fas fa-cog mx-1"></i> Profile</a>
+            </li>
+            <li class="nav-item me-3 me-lg-0">
+              <a class="nav-link text-white" href="/logout"><i class="fas fa-cog mx-1"></i> Logout</a>
+          </li>
+        </ul>
+    </div>
+
+    <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
+{%endblock%}
+{%block content %}
+<div class="container-xl px-4 mt-4">
+    <hr class="mt-0 mb-4">
+    <form method="POST" enctype=multipart/form-data>
+    <div class="row">
+        <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Upload Picture</div>
+                <div class="card-body text-center">
+                    <!-- Profile picture image-->
+                    <img class="img-account-profile  mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                    <!-- Profile picture help block-->
+                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                    <!-- Profile picture upload button-->
+                    <label class="small mb-1" for="New-Post">Upload Photo</label>
+                    <input class="form-control" name ="img" id="New-Post" type="file" class="form-control form-control-lg">
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8">
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header">Post Details</div>
+                <div class="card-body">
+                        <!-- Form Group (username)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputUsername">Caption</label>
+                            <input class="form-control" id="inputUsername" name ="caption" type="text" placeholder="Enter your Caption">
+                       
+                        </div>
+                        <!-- Save changes button-->
+                        <button class="btn btn-primary" type="submit">Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+{%endblock%}

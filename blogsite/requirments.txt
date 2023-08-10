@@ -1,0 +1,9 @@
+flask
+Flask-SQLAlchemy
+bcrypt
+Flask-Bcrypt
+Flask-Login
+Jinja2
+SQLAlchemy
+timeago
+werkzeug

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{%block title %}Feed{%endblock%}
+{%block css%}<link rel="stylesheet" type="text/css" href="../../static/css/profile/edit_profile.css" />{%endblock%}
+{%block navbar%}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light navbar-inverse fixed-top", style="background-color: #a2cdf7">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+        <!-- Navbar brand -->
+        <a class="navbar-brand text-white" href="#">{{user.username}}</a>
+        <!-- Icons -->
+        <ul class="navbar-nav d-flex flex-row me-1">
+            <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link text-white" href="/home/{{user.uid}}"><i class="fas fa-envelope mx-1"></i> Home</a>
+            </li>
+            <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link text-white" href="/explore/{{user.uid}}"><i class="fas fa-cog mx-1"></i> Explore</a>
+            </li>
+            <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link text-white" href="/profile/{{user.uid}}"><i class="fas fa-cog mx-1"></i> Profile</a>
+            </li>
+            <li class="nav-item me-3 me-lg-0">
+              <a class="nav-link text-white" href="/logout"><i class="fas fa-cog mx-1"></i> Logout</a>
+          </li>
+        </ul>
+    </div>
+
+    <!-- Container wrapper -->
+</nav>
+
+<!-- Navbar -->
+{%endblock%}
+{%block content %}
+<div class="container-xl px-4 mt-4">
+    <hr class="mt-0 mb-4">
+    <form method="POST" enctype=multipart/form-data>
+    <div class="row">
+        <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Profile Picture</div>
+                <div class="card-body text-center">
+                    <!-- Profile picture image-->
+                    <img class="img-account-profile rounded-circle mb-2" src="../../static/img/{{user.uid}}/{{user.image_file}}" alt="">
+                    <!-- Profile picture help block-->
+                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                    <!-- Profile picture upload button-->
+                    <label class="small mb-1" for="profile-pic">Select Image</label>
+                    <input class="form-control" name ="img" id="profile-pic" type="file" value="{{user.image_file}}">
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8">
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header">Account Details</div>
+                <div class="card-body">
+                        <!-- Form Group (username)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
+                            <input class="form-control" name="username" id="inputUsername" type="text" value="{{user.username}}">
+                        </div>
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (name)-->
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="inputFirstName">Name</label>
+                                <input class="form-control" name="name" id="inputFirstName" type="text" value="{{user.name}}">
+                            </div>
+                        </div>
+                        <!-- Form Row        -->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (organization name)-->
+                            <div class="col-md-12">
+                                <label class="small mb-1" for="inputOrgName">Caption</label>
+                                <input class="form-control" name="caption" id="inputOrgName" type="text" value="{{user.caption}}">
+                            </div>
+                        </div>
+                        <!-- Save changes button-->
+                        <button class="btn btn-primary" type="submit">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

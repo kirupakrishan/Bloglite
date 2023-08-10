@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{%block title %}Feed{%endblock%}
+{%block css%}<link rel="stylesheet" type="text/css" href="../../static/css/home/feed.css" />{%endblock%}
+{%block navbar%}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light navbar-inverse fixed-top", style="background-color: #a2cdf7">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+        <!-- Navbar brand -->
+        <a class="navbar-brand text-white" href="#">{{user.username}}</a>
+        <!-- Icons -->
+        <ul class="navbar-nav d-flex flex-row me-1">
+            <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link text-white" href="/home/{{user.uid}}"><i class="fas fa-envelope mx-1"></i> Home</a>
+            </li>
+            <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link text-white" href="/explore/{{user.uid}}"><i class="fas fa-cog mx-1"></i> Explore</a>
+            </li>
+            <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link text-white" href="/profile/{{user.uid}}"><i class="fas fa-cog mx-1"></i> Profile</a>
+            </li>
+            <li class="nav-item me-3 me-lg-0">
+              <a class="nav-link text-white" href="/logout"><i class="fas fa-cog mx-1"></i> Logout</a>
+          </li>
+        </ul>
+    </div>
+
+    <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
+{%endblock%}
+{%block content %}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container " >
+    <div class="col-md-7" style="margin: auto;">
+        <div class="social-feed-separated">
+            <div class="social-feed-box">
+                <div class="social-avatar">
+                    <a href="">
+                        <img class="social-image" alt="image" class="rounded-circle" src="../../static/img/{{post.user.uid}}/{{post.user.image_file}}">
+                    </a>
+                    <a href="/check-profile/{{user.uid}}?vid={{post.user.uid}}">
+                        {{post.user.username}}
+                    </a>
+                    {%if user.uid==post.user_id%}
+                    <a style="padding-left: 350px;" href="/delete-post?uid={{user.uid}}&pid={{post.pid}}">
+                        <button ><i  class="fa fa-trash fa-lg" style="color: red; ;"></i> </button> 
+                    </a>
+                    {%endif%}
+                </div>
+            <div class="social-body" style="margin: auto;" >
+                <center><a style="text-decoration: none;" href="/view_post/{{user.uid}}?pid={{post.pid}}"><img style="height:400px;width:400px;" src="../../static/img/{{post.user_id}}/{{post.media}}" class="img-responsive"></a></center>
+                <hr>
+                <p style="text-align:center;">
+                    {{post.content}}
+                </p>
+                <hr>
+                <div class="btn-group">
+                    {%if not post.user_liked(user)%}
+                    <button class="btn btn-white btn-xs"><a style="text-decoration: none;" href="/like?uid={{user.uid}}&pid={{post.pid}}"><i class="fa fa-thumbs-up" style="color:black ;"></i> {{post.get_likes_count()}} Like this!</a></button>
+                    {%else%}
+                    <button class="btn btn-white btn-xs"><a style="text-decoration: none;" href="/unlike?uid={{user.uid}}&pid={{post.pid}}"><i class="fa fa-thumbs-up" style="color:blue ;"></i> {{post.get_likes_count()}} Like this!</a></button>
+                    {%endif%}
+                    <button class="btn btn-white btn-xs"><i class="fa fa-comments"></i> {{post.comments_count()}} Comment</button>
+                </div>
+            </div>
+            <div class="social-footer">
+                <div class="social-comment">
+                    <div class="mb-3">
+                        <form action="/comment?uid={{user.uid}}&pid={{post.pid}}" method="POST">
+                            <label class="small mb-2" for="postcomment">Comment: </label>
+                            <input size="35" id="postcomment" name ="comment" type="text" placeholder="Comment Here">
+                            <button class="btn btn-primary" type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                        </form>
+                    </div>
+                    <hr>
+                    {% if post.comments %}
+                    {% for comment in post.get_comments(post.comments_count()) %}
+                    <a href="" class="pull-left">
+                        <img alt="image" src="../../static/img/{{comment.user.uid}}/{{comment.user.image_file}}">
+                    </a>
+                    <div class="media-body">
+                        <a href="#">
+                            {{comment.user.username}}
+                        </a>
+                        {{comment.content}}
+                        <br>
+                        <small class="text-muted">{{comment.date_posted}}</small>
+                    </div>
+                    <br>
+                    {%endfor%}
+                    {%endif%}
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>    
+</div>
+<div class="align-right fixed-bottom">
+    <button class="add-post button5"><a style="text-decoration: none;" href="/create/{{user.uid}}">&plus;</a></button>
+  </div>
+{%endblock%}

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{%block title %}Feed{%endblock%}
+{%block css%}<link rel="stylesheet" type="text/css" href="../../static/css/home/feed.css" />{%endblock%}
+{%block navbar%}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light navbar-inverse fixed-top", style="background-color: #a2cdf7">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+        <!-- Navbar brand -->
+        <a class="navbar-brand text-white" href="#">{{user.username}}</a>
+        <!-- Icons -->
+        <ul class="navbar-nav d-flex flex-row me-1">
+            <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link text-white" href="/home/{{user.uid}}"><i class="fas fa-envelope mx-1"></i> Home</a>
+            </li>
+            <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link text-white" href="/explore/{{user.uid}}"><i class="fas fa-cog mx-1"></i> Explore</a>
+            </li>
+            <li class="nav-item me-3 me-lg-0">
+                <a class="nav-link text-white" href="/profile/{{user.uid}}"><i class="fas fa-cog mx-1"></i> Profile</a>
+            </li>
+            <li class="nav-item me-3 me-lg-0">
+              <a class="nav-link text-white" href="/logout"><i class="fas fa-cog mx-1"></i> Logout</a>
+          </li>
+        </ul>
+    </div>
+
+    <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
+{%endblock%}
+{%block content %}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+{% for person in users %}
+{% if person.uid != user.uid%}
+<div class="container " >
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col col-md-9 col-lg-7 col-xl-5">
+            <div class="card" style="border-radius: 15px;">
+              <div class="card-body p-4">
+                <div class="d-flex text-black">
+                  <div class="flex-shrink-0">
+                    <img src="../../static/img/{{person.uid}}/{{person.image_file}}"
+                      alt="Generic placeholder image" class="img-fluid"
+                      style="height:150px;width:150px;">
+                  </div>
+                  <div class="flex-grow-1 ms-3">
+                    <a class="mb-1" href="/check-profile/{{user.uid}}?vid={{person.uid}}">{{person.username}}</a>
+                    <p class="mb-2 pb-1" style="color: #2b2a2a;">{{person.caption}}</p>
+                    <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
+                      style="background-color: #efefef;">
+                      <div>
+                        <p class="small text-muted mb-1">Posts</p>
+                        <p class="mb-0">{{user.post_count(person)}}</p>
+                      </div>
+                      <div class="px-3">
+                        <p class="small text-muted mb-1">Followers</p>
+                        <p class="mb-0">{{person.follower|length}}</p>
+                      </div>
+                      <div>
+                        <p class="small text-muted mb-1">Following</p>
+                        <p class="mb-0">{{person.follows|length}}</p>
+                      </div>
+                    </div>
+                    {%if user.is_following(person)%}
+                    <div class="d-flex pt-1">
+                      <button type="button" class="btn btn-primary flex-grow-1"><a style="color: white; text-decoration: none; " href="/unfollow?uid={{user.uid}}&fid={{person.uid}}">Unfollow</a></button>
+                    </div>
+                    {%else%}
+                    <div class="d-flex pt-1">
+                      <button type="button" class="btn btn-primary flex-grow-1"><a style="color: white; text-decoration: none;" href="/follow?uid={{user.uid}}&fid={{person.uid}}">Follow</a></button>
+                    </div>
+                    {%endif%}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+{%endif%}
+{%endfor%}
+<div class="align-right fixed-bottom">
+    <button class="add-post button5"><a style="text-decoration: none;" href="/create/{{user.uid}}">&plus;</a></button>
+  </div>
+{%endblock%}
